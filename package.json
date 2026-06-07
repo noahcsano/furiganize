@@ -1,0 +1,23 @@
+{
+  "name": "furiganize",
+  "version": "1.0.0",
+  "description": "Furigana Tooltip Chrome Extension",
+  "private": true,
+  "scripts": {
+    "build":       "esbuild src/content_script.js --bundle --format=iife --outfile=content_script.js --platform=browser",
+    "test":        "jest",
+    "setup":       "node scripts/copy-vendor.js",
+    "icons":       "node scripts/generate-icons.js",
+    "pack":        "npm run build && node scripts/pack.js",
+    "postinstall": "node scripts/copy-vendor.js && node scripts/generate-icons.js && npm run build"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": ["**/test/**/*.test.js"]
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "jest":    "^29.7.0",
+    "kuromoji": "^0.1.2"
+  }
+}

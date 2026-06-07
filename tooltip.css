@@ -1,0 +1,131 @@
+/*
+  all: initial resets every CSS property to its spec default so no page
+  stylesheet bleeds into the tooltip. Explicit declarations below re-apply
+  only what we need.
+*/
+#furigana-tooltip-overlay {
+  all: initial;
+
+  /* Layout */
+  display: none;
+  position: fixed !important;
+  z-index: 2147483647 !important;
+  top: 0;
+  left: 0;
+  max-width: min(560px, calc(100vw - 20px));
+  max-height: 320px;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  /* Visual */
+  background: rgba(16, 16, 18, 0.97);
+  border-radius: 11px;
+  box-shadow:
+    0 6px 28px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+
+  /* Interaction — tooltip is interactive so overflow-y scroll works */
+  pointer-events: auto;
+  cursor: default;
+
+  /* Smooth appear */
+  animation: ft-appear 0.1s ease-out both;
+}
+
+@keyframes ft-appear {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Close button ─────────────────────────────────────────────────────────── */
+
+#furigana-tooltip-overlay .ft-close {
+  all: unset;
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  line-height: 1;
+  color: rgba(242, 242, 247, 0.35);
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 1;
+  transition: color 0.1s, background 0.1s;
+}
+
+#furigana-tooltip-overlay .ft-close:hover {
+  color: rgba(242, 242, 247, 0.9);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ── Content area ─────────────────────────────────────────────────────────── */
+
+#furigana-tooltip-overlay .ft-content {
+  all: unset;
+  display: block;
+  padding: 12px 36px 12px 16px; /* right pad makes room for close button */
+  max-height: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /* Typography */
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic Medium",
+               "Meiryo", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 2.6;
+  color: #f2f2f7;
+  -webkit-font-smoothing: antialiased;
+  word-break: break-all;
+  white-space: normal;
+}
+
+/* Thin scrollbar for overflow content */
+#furigana-tooltip-overlay .ft-content::-webkit-scrollbar {
+  width: 4px;
+}
+#furigana-tooltip-overlay .ft-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+#furigana-tooltip-overlay .ft-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+/* ── Ruby annotations ─────────────────────────────────────────────────────── */
+
+#furigana-tooltip-overlay ruby {
+  all: unset;
+  display: ruby;
+  ruby-align: center;
+}
+
+#furigana-tooltip-overlay rt {
+  all: unset;
+  display: ruby-text;
+  font-size: 0.48em;
+  color: #bf9fff;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+#furigana-tooltip-overlay span {
+  all: unset;
+}
+
+/* ── Status messages ──────────────────────────────────────────────────────── */
+
+#furigana-tooltip-overlay .ft-loading {
+  all: unset;
+  display: inline;
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(242, 242, 247, 0.4);
+}

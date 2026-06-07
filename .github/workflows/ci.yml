@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # npm ci uses package-lock.json for a reproducible install and
+      # automatically triggers postinstall (copy-vendor + icons + build).
+      - name: Install & build
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Verify build artifact
+        run: |
+          test -f content_script.js || { echo "✗ content_script.js missing"; exit 1; }
+          echo "✓ content_script.js present ($(wc -c < content_script.js) bytes)"

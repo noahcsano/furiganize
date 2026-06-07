@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Furigana Tooltip",
+  "description": "Select Japanese text to see furigana in a tooltip — zero page modification",
+  "version": "1.0.0",
+  "icons": {
+    "16":  "icons/icon16.png",
+    "48":  "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+    },
+    "default_title": "Furigana Tooltip"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["vendor/kuromoji.js", "content_script.js"],
+      "css": ["tooltip.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["vendor/dict/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
